@@ -1,5 +1,5 @@
 <template>
-  <div class="modal__background" @click="handeToggleModal">
+  <div class="modal__background" @click="handeToggleModal" v-if="showModal">
     <div class="modal__conent">
       <slot></slot>
     </div>
