@@ -29,7 +29,7 @@ const props = defineProps({
 
 <style scoped lang="scss">
 .blog-item {
-  border: 1px solid teal;
+  border: 1px solid #2f5cc5;
   padding: 10px;
   border-radius: 10px;
   .line {

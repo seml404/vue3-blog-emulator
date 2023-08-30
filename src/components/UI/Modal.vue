@@ -1,6 +1,6 @@
 <template>
   <div class="modal__background" @click="handeToggleModal" v-if="showModal">
-    <div class="modal__conent">
+    <div class="modal__content" @click.stop>
       <slot></slot>
     </div>
   </div>
@@ -25,16 +25,26 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.modal-background {
+<style lang="scss">
+.modal__background {
   position: fixed;
-  opacity: 0.5;
+  opacity: 0.7;
   top: 0;
   right: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(108, 105, 105);
   display: flex;
-  background-color: red;
+  align-items: center;
+  justify-content: center;
 }
 .modal__content {
+  background-color: #fff;
+  opacity: 1;
+  padding: 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 </style>
 >
