@@ -9,6 +9,7 @@
         class="blog-item"
       ></blog-item>
     </div>
+    <div v-else>No posts yet</div>
     <modal-window :showModal="showModal" @toggleModal="showModal = !showModal"
       ><CreateBlogItem @submitNewBlog="handleSubmitNewBlog"></CreateBlogItem>
     </modal-window>
