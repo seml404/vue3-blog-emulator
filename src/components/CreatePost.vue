@@ -36,7 +36,7 @@ const handleSubmit = () => {
 
 <script lang="ts">
 export default {
-  name: 'CreateBlogItem'
+  name: 'CreatePost'
 }
 </script>
 

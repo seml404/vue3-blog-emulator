@@ -1,5 +1,5 @@
 export namespace Blog {
-  interface Blog {
+  export interface PostItem {
     id: number
     title: string
     text: string

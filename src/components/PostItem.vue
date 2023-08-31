@@ -1,5 +1,5 @@
 <template>
-  <div class="blog-item">
+  <div class="post-item">
     <div class="line">
       <p class="title">Title:</p>
       <p class="text">{{ blog_item.title }}</p>
@@ -8,6 +8,7 @@
       <p class="title">Text:</p>
       <p class="text">{{ blog_item.text }}</p>
     </div>
+    <btn-main @click="$emit('deletePost', blog_item.id)">Delete post</btn-main>
   </div>
 </template>
 
@@ -18,7 +19,6 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { Blog } from '@/types/index'
 const props = defineProps({
   blog_item: {
     type: Object,
@@ -28,7 +28,7 @@ const props = defineProps({
 </script>
 
 <style scoped lang="scss">
-.blog-item {
+.post-item {
   border: 1px solid #2f5cc5;
   padding: 10px;
   border-radius: 10px;
