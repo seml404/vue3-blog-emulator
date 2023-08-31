@@ -1,9 +1,9 @@
 <template>
   <TransitionGroup name="posts">
     <post-item
-      v-for="blog_item in blogs"
-      :key="blog_item.id"
-      :blog_item="blog_item"
+      v-for="post in posts"
+      :key="post.id"
+      :post="post"
       class="post-item"
       @deletePost="handleDeletePost"
     ></post-item>
@@ -20,8 +20,8 @@ export default {
 import type { Blog } from '@/types/index'
 const emits = defineEmits(['deletePost'])
 const props = defineProps({
-  blogs: {
-    type: Array<Blog.PostItem>,
+  posts: {
+    type: Array<Blog.Post>,
     required: true
   }
 })

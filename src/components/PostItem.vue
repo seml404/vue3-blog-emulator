@@ -2,13 +2,13 @@
   <div class="post-item">
     <div class="line">
       <p class="title">Title:</p>
-      <p class="text">{{ blog_item.title }}</p>
+      <p class="text">{{ post.title }}</p>
     </div>
     <div class="line">
       <p class="title">Text:</p>
-      <p class="text">{{ blog_item.body }}</p>
+      <p class="text">{{ post.body }}</p>
     </div>
-    <btn-main @click="$emit('deletePost', blog_item.id)">Delete post</btn-main>
+    <btn-main @click="$emit('deletePost', post.id)">Delete post</btn-main>
   </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
 
 <script setup lang="ts">
 const props = defineProps({
-  blog_item: {
+  post: {
     type: Object,
     required: true
   }

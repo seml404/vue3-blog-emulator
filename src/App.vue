@@ -1,9 +1,9 @@
 <template>
   <div>
     <h1>List of posts</h1>
-    <Transition name="blog-fade">
-      <div v-if="blogs.length">
-        <posts-list :blogs="blogs" @deletePost="handleDeletePost"></posts-list>
+    <Transition name="posts-fade">
+      <div v-if="posts.length">
+        <posts-list :posts="posts" @deletePost="handleDeletePost"></posts-list>
       </div>
       <div v-else>No posts yet</div>
     </Transition>
@@ -16,20 +16,23 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import type { Blog } from '@/types/index'
 import { RouterLink, RouterView } from 'vue-router'
 import { get_posts } from './service/index'
+import { useBlogStore } from '@/stores'
 
-const blogs = ref<Blog.PostItem[]>([{ id: 1, title: 'First blog', body: 'Text of the first blog' }])
+// const posts = ref<Blog.Post[]>([{ id: 1, title: 'First blog', body: 'Text of the first blog' }])
+const store = useBlogStore()
+const posts = store.postsList
 const showModal = ref(false)
 const handleSubmitNewBlog = (data) => {
-  blogs.value.push(data)
+  posts.value.push(data)
   showModal.value = false
 }
 
 const handleDeletePost = (id: number) => {
-  blogs.value = blogs.value.filter((el) => el.id !== id)
+  posts.value = posts.value.filter((el) => el.id !== id)
 }
 
 onMounted(() => {
@@ -53,16 +56,16 @@ onMounted(() => {
   display: none;
 }
 
-.blog-fade-enter-active {
+.posts-fade-enter-active {
   transition: all 0.3s ease-out;
 }
 
-.blog-fade-leave-active {
+.posts-fade-leave-active {
   transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
-.blog-fade-enter-from,
-.blog-fade-leave-to {
+.posts-fade-enter-from,
+.posts-fade-leave-to {
   transform: translateX(20px);
   opacity: 0;
 }

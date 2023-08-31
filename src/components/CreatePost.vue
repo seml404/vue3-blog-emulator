@@ -20,7 +20,7 @@
 import type { Blog } from '@/types'
 import { reactive } from 'vue'
 const emit = defineEmits(['submitNewBlog'])
-const newBlog = reactive<Blog.PostItem>({
+const newBlog = reactive<Blog.Post>({
   id: Date.now(),
   title: '',
   body: ''
