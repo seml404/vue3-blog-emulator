@@ -6,7 +6,7 @@
     </div>
     <div class="line">
       <p class="title">Text:</p>
-      <p class="text">{{ blog_item.text }}</p>
+      <p class="text">{{ blog_item.body }}</p>
     </div>
     <btn-main @click="$emit('deletePost', blog_item.id)">Delete post</btn-main>
   </div>
@@ -14,7 +14,7 @@
 
 <script lang="ts">
 export default {
-  name: 'BlogItem'
+  name: 'PostItem'
 }
 </script>
 

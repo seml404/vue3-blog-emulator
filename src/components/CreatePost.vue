@@ -1,34 +1,33 @@
 <template>
-  <div>
-    <form @click.prevent>
-      <input-main
-        :modelValue="newBlog.title"
-        :custom_placeholder="'title'"
-        @update:modelValue="(data) => (newBlog.title = data)"
-        class="input-new-blog"
-      ></input-main>
-      <input-main
-        :modelValue="newBlog.text"
-        :custom_placeholder="'text'"
-        @update:modelValue="(data) => (newBlog.text = data)"
-        class="input-new-blog"
-      ></input-main>
-      <btn-main @click="handleSubmit">Create new post</btn-main>
-    </form>
-  </div>
+  <form @click.prevent>
+    <input-main
+      :modelValue="newBlog.title"
+      :custom_placeholder="'title'"
+      @update:modelValue="(data) => (newBlog.title = data)"
+      class="input-new-blog"
+    ></input-main>
+    <input-main
+      :modelValue="newBlog.body"
+      :custom_placeholder="'text'"
+      @update:modelValue="(data) => (newBlog.body = data)"
+      class="input-new-blog"
+    ></input-main>
+    <btn-main @click="handleSubmit">Create new post</btn-main>
+  </form>
 </template>
 
 <script setup lang="ts">
+import type { Blog } from '@/types'
 import { reactive } from 'vue'
 const emit = defineEmits(['submitNewBlog'])
-const newBlog = reactive({
+const newBlog = reactive<Blog.PostItem>({
   id: Date.now(),
   title: '',
-  text: ''
+  body: ''
 })
 const handleSubmit = () => {
   console.log('submit new blogА', newBlog)
-  if (newBlog.title && newBlog.text) {
+  if (newBlog.title && newBlog.body) {
     emit('submitNewBlog', newBlog)
   }
 }

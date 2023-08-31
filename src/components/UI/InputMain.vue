@@ -31,6 +31,6 @@ const handleUpdate = (e) => {
 .input-main {
   padding: 5px;
   border-radius: 5px;
-  border: 1px solid teal;
+  border: 1px solid #2f5cc5;
 }
 </style>

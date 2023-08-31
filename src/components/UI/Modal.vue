@@ -28,12 +28,12 @@ export default {
 <style lang="scss">
 .modal__background {
   position: fixed;
-  opacity: 0.7;
+
   top: 0;
   right: 0;
   width: 100%;
   height: 100vh;
-  background-color: rgb(108, 105, 105);
+  background-color: rgb(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
