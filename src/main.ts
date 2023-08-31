@@ -1,5 +1,3 @@
-// import './assets/main.css'
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import {
@@ -8,11 +6,12 @@ import {
   btn_main,
   input_main,
   posts_list,
-  create_post
+  create_post,
+  nav_bar
 } from '@/components'
 
 import App from './App.vue'
-// import router from './router'
+import router from './router/'
 
 const app = createApp(App)
 
@@ -24,5 +23,6 @@ app
   .component('input-main', input_main)
   .component('posts-list', posts_list)
   .component('create-post', create_post)
+  .component('nav-bar', nav_bar)
+  .use(router)
   .mount('#app')
-// app.use(router)
