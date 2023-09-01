@@ -26,7 +26,6 @@ const newBlog = reactive<Blog.Post>({
   body: ''
 })
 const handleSubmit = () => {
-  console.log('submit new blogА', newBlog)
   if (newBlog.title && newBlog.body) {
     emit('submitNewBlog', newBlog)
   }

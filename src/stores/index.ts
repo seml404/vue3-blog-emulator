@@ -17,7 +17,7 @@ export const useBlogStore = defineStore('blog', () => {
   }
 
   const addPost = (post: Blog.Post) => {
-    posts.value.push(post)
+    posts.value.unshift(post)
     paginate_number.value += 10
   }
 
