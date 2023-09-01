@@ -2,7 +2,7 @@
   <div class="posts">
     <div>
       <input-main :model-value="searchValue" :custom_placeholder="'Search'"></input-main>
-      <btn-main @click="null">Search</btn-main>
+      <btn-main @click="null" class="is-primary ml-4">Search</btn-main>
     </div>
     <btn-main @click="showModal = true">Create new post</btn-main>
     <h1>List of posts</h1>
@@ -13,11 +13,11 @@
       </div>
       <div v-else>No posts yet</div>
     </Transition>
-
-    <modal-window :showItem="showModal" @toggleModal="showModal = !showModal"
-      ><create-post @submitNewBlog="handleSubmitNewBlog"></create-post>
-    </modal-window>
-
+    <Transition name="modal-fade">
+      <modal-window :showItem="showModal" @toggleModal="showModal = !showModal"
+        ><create-post @submitNewBlog="handleSubmitNewBlog"></create-post>
+      </modal-window>
+    </Transition>
     <spinner-main :showItem="isLoading"></spinner-main>
   </div>
 </template>
@@ -90,17 +90,24 @@ onMounted(() => {
   margin-bottom: 10px;
 }
 
-.posts-fade-enter-active {
+.posts-fade-enter-active,
+.modal-fade-enter-active {
   transition: all 0.3s ease-out;
 }
 
-.posts-fade-leave-active {
+.posts-fade-leave-active,
+.modal-fade-leave-active {
   transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
 }
 
 .posts-fade-enter-from,
 .posts-fade-leave-to {
-  transform: translateX(20px);
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.modal-fade-enter-from,
+.modal-fade-leave-to {
   opacity: 0;
 }
 </style>
