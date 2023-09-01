@@ -1,5 +1,5 @@
 <template>
-  <div class="modal__background" @click="handeToggleModal" v-if="showModal">
+  <div class="modal__background" @click="handeToggleModal" v-if="showItem">
     <div class="modal__content" @click.stop>
       <slot></slot>
     </div>
@@ -8,7 +8,7 @@
 
 <script lang="ts" setup>
 const props = defineProps({
-  showModal: {
+  showItem: {
     type: Boolean,
     default: false
   }

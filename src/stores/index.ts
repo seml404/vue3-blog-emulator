@@ -3,11 +3,11 @@ import { defineStore } from 'pinia'
 import type { Blog } from '@/types'
 
 export const useBlogStore = defineStore('blog', () => {
-  const isLoading = ref<Boolean>(false)
+  const loading = ref<Boolean>(false)
   const posts = ref<Blog.Post[]>([])
   const paginate_number = ref<number>(0)
   const setLoading = (value: boolean) => {
-    isLoading.value = value
+    loading.value = value
   }
   const setPosts = (data: Blog.Post[]) => {
     if (data.length) {
@@ -16,7 +16,18 @@ export const useBlogStore = defineStore('blog', () => {
     }
   }
 
+  const addPost = (post: Blog.Post) => {
+    posts.value.push(post)
+    paginate_number.value += 10
+  }
+
+  const deletePost = (id: number) => {
+    posts.value = posts.value.filter((el: Blog.Post) => el.id !== id)
+  }
+
+  const isLoading = computed(() => loading)
+
   const postsList = computed(() => posts)
 
-  return { isLoading, posts, setLoading, setPosts, postsList, paginate_number }
+  return { isLoading, posts, setLoading, setPosts, addPost, deletePost, postsList, paginate_number }
 })

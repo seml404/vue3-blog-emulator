@@ -7,7 +7,8 @@ import {
   input_main,
   posts_list,
   create_post,
-  nav_bar
+  nav_bar,
+  spinner_main
 } from '@/components'
 
 import App from './App.vue'
@@ -24,5 +25,6 @@ app
   .component('posts-list', posts_list)
   .component('create-post', create_post)
   .component('nav-bar', nav_bar)
+  .component('spinner-main', spinner_main)
   .use(router)
   .mount('#app')

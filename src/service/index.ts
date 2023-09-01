@@ -8,10 +8,11 @@ export const get_posts = async (startNum: number) => {
     store.setLoading(true)
     const posts = await Axios.get(`${URL}/posts/?_start=${startNum}&_limit=10`)
     store.setPosts(posts.data)
-    console.log(posts)
   } catch (er) {
     console.log(er)
   } finally {
-    store.setLoading(false)
+    setTimeout(() => {
+      store.setLoading(false)
+    }, 1000)
   }
 }
