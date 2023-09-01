@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="test">
     <nav-bar></nav-bar>
     <router-view></router-view>
   </div>
@@ -12,5 +12,9 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+[v-cloak] {
+  display: none;
 }
 </style>

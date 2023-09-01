@@ -1,5 +1,5 @@
 <template>
-  <div :class="['posts', { ['hidden']: isLoading }]">
+  <div class="posts">
     <btn-main @click="showModal = true">Create new post</btn-main>
     <h1>List of posts</h1>
     <Transition name="posts-fade">
@@ -57,6 +57,22 @@ watch(bottom, () => {
   }
 })
 
+watch(
+  isLoading,
+  () => {
+    if (isLoading.value) {
+      document.body.style.overflow = 'hidden'
+      console.log('is loading')
+    } else if (!isLoading.value) {
+      console.log('this case, no hidden')
+      document.body.style.overflow = ''
+    }
+  },
+  {
+    immediate: true
+  }
+)
+
 onMounted(() => {
   get_posts(store.paginate_number)
 })
@@ -66,10 +82,6 @@ onMounted(() => {
 .posts .post-item {
   margin-top: 10px;
   margin-bottom: 10px;
-}
-
-[v-cloak] {
-  display: none;
 }
 
 .posts-fade-enter-active {
@@ -84,9 +96,5 @@ onMounted(() => {
 .posts-fade-leave-to {
   transform: translateX(20px);
   opacity: 0;
-}
-
-.hidden {
-  overflow: hidden;
 }
 </style>

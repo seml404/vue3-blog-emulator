@@ -1,6 +1,6 @@
 <template>
-  <div class="spinner__background" v-if="showItem">
-    <div class="spinner__content"></div>
+  <div class="spinner-background" v-if="showItem">
+    <div class="spinner-content"></div>
   </div>
 </template>
 
@@ -21,21 +21,21 @@ const props = defineProps({
 </script>
 
 <style lang="scss" scoped>
-.spinner__background {
+.spinner-background {
   background-color: rgb(0, 0, 0, 0.5);
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
-  overflow: hidden;
   z-index: 9999;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 
-.spinner__content {
+.spinner-content {
   display: inline-block;
   width: 50px;
   height: 50px;
@@ -44,7 +44,6 @@ const props = defineProps({
   border-top-color: #fff;
   animation: spin 1s ease-in-out infinite;
   -webkit-animation: spin 1s ease-in-out infinite;
-  overflow: hidden;
 }
 
 @keyframes spin {
