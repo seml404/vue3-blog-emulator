@@ -1,11 +1,14 @@
 <template>
-  <div class="posts">
+  <div class="content">
     <div>
       <input-main :model-value="searchValue" :custom_placeholder="'Search'"></input-main>
-      <btn-main @click="null" class="is-primary ml-4">Search</btn-main>
+      <btn-main @click="null" class="is-primary mt-4 mb-4">Search</btn-main>
+    </div>
+    <div class="is-flex is-justify-content-center is-align-content-center">
+      <p class="is-size-2">List of posts</p>
     </div>
     <btn-main @click="showModal = true">Create new post</btn-main>
-    <h1>List of posts</h1>
+
     <Transition name="posts-fade">
       <div v-if="posts.length">
         <posts-list :posts="posts" @deletePost="handleDeletePost"></posts-list>
@@ -57,6 +60,7 @@ const bottom = ref()
 watch(bottom, () => {
   if (bottom.value) {
     const observer = new IntersectionObserver((data: IntersectionObserverEntry[]) => {
+      console.log(data[0].isIntersecting)
       data[0].isIntersecting ? get_posts(store.paginate_number) : null
     })
     observer.observe(bottom.value)

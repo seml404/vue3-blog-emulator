@@ -1,14 +1,14 @@
 <template>
-  <div class="post-item">
+  <div class="post-item card">
     <div class="line">
-      <p class="title">Title:</p>
-      <p class="text">{{ post.title }}</p>
+      <p class="is-size-4 mr-3">Title:</p>
+      <p class="is-size-6">{{ post.title }}</p>
     </div>
     <div class="line">
-      <p class="title">Text:</p>
-      <p class="text">{{ post.body }}</p>
+      <p class="is-size-4 mr-3">Text:</p>
+      <p class="is-size-6">{{ post.body }}</p>
     </div>
-    <btn-main @click="$emit('deletePost', post.id)">Delete post</btn-main>
+    <btn-main class="mt-4" @click="$emit('deletePost', post.id)">Delete post</btn-main>
   </div>
 </template>
 

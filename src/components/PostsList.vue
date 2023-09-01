@@ -4,7 +4,6 @@
       v-for="post in posts"
       :key="post.id"
       :post="post"
-      class="post-item"
       @deletePost="handleDeletePost"
     ></post-item>
   </TransitionGroup>
@@ -35,7 +34,10 @@ const handleDeletePost = (data: number) => {
 .posts-leave-active {
   transition: all 0.5s ease;
 }
-.posts-enter-from,
+.posts-enter-from {
+  opacity: 0;
+  transform: translateY(30px);
+}
 .posts-leave-to {
   opacity: 0;
   transform: translateX(30px);

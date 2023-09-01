@@ -54,7 +54,6 @@ export default {
 .modal__content {
   background-color: #fff;
   opacity: 1;
-  padding: 20px;
   border-radius: 10px;
   display: flex;
   justify-content: space-between;

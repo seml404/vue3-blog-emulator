@@ -1,12 +1,14 @@
 <template>
-  <div>
-    <router-link class="nav-link" to="/">Home Page</router-link>
-    <router-link to="/posts">Posts Page</router-link>
+  <div class="is-flex is-justify-content-center is-align-content-center mt-5 mb-5">
+    <button-main @click="$router.push('/')" class="is-link mr-5">Home Page</button-main>
+    <button-main @click="$router.push('/posts')" class="is-link mr-5">Posts</button-main>
   </div>
 </template>
 
 <script lang="ts">
+import ButtonMain from './UI/ButtonMain.vue'
 export default {
+  components: { ButtonMain },
   name: 'NavBar'
 }
 </script>

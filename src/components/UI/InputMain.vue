@@ -1,6 +1,6 @@
 <template>
   <input
-    class="input-main"
+    class="input"
     :value="modelValue"
     @input="handleUpdate"
     :placeholder="custom_placeholder"
@@ -28,9 +28,7 @@ const handleUpdate = (e) => {
 </script>
 
 <style lang="scss" scoped>
-.input-main {
-  padding: 5px;
-  border-radius: 5px;
+.input {
   border: 1px solid #2f5cc5;
 }
 </style>
