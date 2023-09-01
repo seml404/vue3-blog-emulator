@@ -4,6 +4,7 @@
     <Transition name="posts-fade">
       <div v-if="posts.length">
         <posts-list :posts="posts" @deletePost="handleDeletePost"></posts-list>
+        <div ref="bottom"></div>
       </div>
       <div v-else>No posts yet</div>
     </Transition>
@@ -22,7 +23,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import type { Blog } from '@/types/index'
 import { RouterLink, RouterView } from 'vue-router'
 import { get_posts } from '@/service/index'
@@ -41,9 +42,22 @@ const handleDeletePost = (id: number) => {
   posts.value = posts.value.filter((el) => el.id !== id)
 }
 
-onMounted(() => {
-  get_posts()
+const bottom = ref()
+
+watch(bottom, () => {
+  if (bottom.value) {
+    const observer = new IntersectionObserver((data) => {
+      data[0].isIntersecting ? get_posts(store.paginate_number) : null
+    })
+    observer.observe(bottom.value)
+  }
 })
+
+onMounted(() => {
+  get_posts(store.paginate_number)
+})
+
+const scrolledToBottom = ref(false)
 </script>
 
 <style scoped>
