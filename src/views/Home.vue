@@ -1,5 +1,7 @@
 <template>
-  <h1>This is the main page</h1>
+  <div class="content">
+    <p class="is-size-1">This is the main page!</p>
+  </div>
 </template>
 
 <script lang="ts">

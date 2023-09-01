@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <nav-bar></nav-bar>
     <router-view></router-view>
   </div>
@@ -8,12 +8,6 @@
 <script setup lang="ts"></script>
 
 <style>
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
 [v-cloak] {
   display: none;
 }

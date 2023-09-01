@@ -10,6 +10,8 @@ import {
   nav_bar,
   spinner_main
 } from '@/components'
+import '@/scss/main.scss'
+import 'bulma/css/bulma.css'
 
 import App from './App.vue'
 import router from './router/'
