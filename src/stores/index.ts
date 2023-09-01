@@ -1,4 +1,4 @@
-import { computed, ref } from 'vue'
+import { computed, ref, type Ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { Blog } from '@/types'
 
@@ -25,9 +25,19 @@ export const useBlogStore = defineStore('blog', () => {
     posts.value = posts.value.filter((el: Blog.Post) => el.id !== id)
   }
 
-  const isLoading = computed(() => loading)
+  const isLoading = computed<Ref<Boolean>>(() => loading)
 
-  const postsList = computed(() => posts)
+  const postsList = computed<Ref<Blog.Post[]>>(() => posts)
 
-  return { isLoading, posts, setLoading, setPosts, addPost, deletePost, postsList, paginate_number }
+  return {
+    loading,
+    isLoading,
+    posts,
+    setLoading,
+    setPosts,
+    addPost,
+    deletePost,
+    postsList,
+    paginate_number
+  }
 })

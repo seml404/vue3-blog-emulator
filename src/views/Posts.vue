@@ -1,5 +1,9 @@
 <template>
   <div class="posts">
+    <div>
+      <input-main :model-value="searchValue" :custom_placeholder="'Search'"></input-main>
+      <btn-main @click="null">Search</btn-main>
+    </div>
     <btn-main @click="showModal = true">Create new post</btn-main>
     <h1>List of posts</h1>
     <Transition name="posts-fade">
@@ -20,7 +24,7 @@
 
 <script lang="ts">
 export default {
-  components: { SpinnerMain },
+  components: { SpinnerMain, InputMain },
   name: 'PostsView'
 }
 </script>
@@ -28,10 +32,10 @@ export default {
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue'
 import type { Blog } from '@/types/index'
-import { RouterLink, RouterView } from 'vue-router'
 import { get_posts } from '@/service/index'
 import { useBlogStore } from '@/stores'
 import SpinnerMain from '../components/UI/SpinnerMain.vue'
+import InputMain from '../components/UI/InputMain.vue'
 
 // mock initial
 // const posts = ref<Blog.Post[]>([{ id: 1, title: 'First blog', body: 'Text of the first blog' }])
@@ -39,6 +43,8 @@ const store = useBlogStore()
 const posts = store.postsList
 const showModal = ref(false)
 const isLoading = store.isLoading
+const searchValue = ref<string>('')
+
 const handleSubmitNewBlog = (post: Blog.Post) => {
   store.addPost(post)
   showModal.value = false
@@ -74,7 +80,7 @@ watch(
 )
 
 onMounted(() => {
-  get_posts(store.paginate_number)
+  if (!posts.value.length) get_posts(store.paginate_number)
 })
 </script>
 

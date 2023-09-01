@@ -7,6 +7,7 @@
 </template>
 
 <script lang="ts" setup>
+import { onBeforeUnmount, onMounted } from 'vue'
 const props = defineProps({
   showItem: {
     type: Boolean,
@@ -17,6 +18,18 @@ const emit = defineEmits(['toggleModal'])
 const handeToggleModal = (e) => {
   emit('toggleModal')
 }
+
+const escToggle = (e: KeyboardEvent) => {
+  if (e.key === 'Escape') emit('toggleModal')
+}
+
+onMounted(() => {
+  document.addEventListener('keydown', escToggle)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('keydown', escToggle)
+})
 </script>
 
 <script lang="ts">
