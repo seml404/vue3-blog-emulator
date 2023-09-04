@@ -28,7 +28,6 @@ const props = defineProps({
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 9999;
   display: flex;
   justify-content: center;
   align-items: center;

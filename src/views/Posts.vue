@@ -15,7 +15,7 @@
     <Transition name="posts-fade">
       <div v-if="posts.length">
         <posts-list :posts="posts" @deletePost="handleDeletePost"></posts-list>
-        <div ref="bottom">bottom</div>
+        <div ref="bottom" class="card has-text-centered">End of list</div>
       </div>
       <div v-else>No posts yet</div>
     </Transition>
@@ -26,8 +26,8 @@
     </Transition>
     <spinner-main :showItem="isLoading"></spinner-main>
     <Transition name="modal-fade">
-      <modal-window :showItem="showModalNoPosts" @toggleModal="closeModalNoPosts"
-        >No more posts!
+      <modal-window :showItem="showNoPosts" @toggleModal="closeShowNoPosts"
+        ><div class="p-5">No more posts!</div>
       </modal-window>
     </Transition>
   </div>
@@ -55,10 +55,9 @@ const posts = store.postsList
 const showModal = ref(false)
 const isLoading = store.isLoading
 const noMorePosts = store.noMorePosts
-const showModalNoPosts = ref(false)
+const showNoPosts = ref(false)
 const searchValue = ref<string>('')
 const isIntersected = ref<boolean>(false)
-const isScrollEvent = ref<boolean>(false)
 const scrolledDown = ref<boolean>(false)
 const scrolledValue = ref<number>(0)
 
@@ -72,8 +71,7 @@ const handleDeletePost = (id: number) => store.deletePost(id)
 
 const requestForPosts = async () => {
   isIntersected.value = false
-  isScrollEvent.value = false
-  const result = await get_posts(store.paginate_number)
+  await get_posts(store.paginate_number)
 }
 
 const handleIntersect = () => {
@@ -81,18 +79,16 @@ const handleIntersect = () => {
 }
 
 const handleScroll = (e: Event) => {
-  isScrollEvent.value = true
-  if (scrolledValue.value < document.body.scrollTop) {
-    scrolledDown.value = true
-  } else {
-    scrolledDown.value = false
-  }
+  scrolledValue.value < document.body.scrollTop
+    ? (scrolledDown.value = true)
+    : (scrolledDown.value = false)
+  if (!scrolledDown.value) isIntersected.value = false
   if (scrolledDown.value && isIntersected.value === true) requestForPosts()
   scrolledValue.value = document.body.scrollTop
 }
 
-const closeModalNoPosts = () => {
-  showModalNoPosts.value = false
+const closeShowNoPosts = () => {
+  showNoPosts.value = false
   store.setNoPosts(false)
 }
 
@@ -108,11 +104,9 @@ watch(bottom, () => {
 watch(
   isLoading,
   () => {
-    if (isLoading.value) {
-      document.body.style.overflow = 'hidden'
-    } else if (!isLoading.value) {
-      document.body.style.overflow = ''
-    }
+    isLoading.value
+      ? (document.body.style.overflow = 'hidden')
+      : (document.body.style.overflow = '')
   },
   {
     immediate: true
@@ -125,7 +119,10 @@ watch(searchValue, () => {
 
 watch(noMorePosts, () => {
   if (noMorePosts.value) {
-    showModalNoPosts.value = true
+    setTimeout(() => {
+      store.setLoading(false)
+      showNoPosts.value = true
+    }, 500)
   }
 })
 
