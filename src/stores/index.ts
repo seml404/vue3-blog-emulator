@@ -1,10 +1,12 @@
 import { computed, ref, type Ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { Blog } from '@/types'
+import type { ComputedRef } from 'vue'
 
 export const useBlogStore = defineStore('blog', () => {
   const loading = ref<Boolean>(false)
   const posts = ref<Blog.Post[]>([])
+  const searchValue = ref<string>('')
   const paginate_number = ref<number>(0)
   const setLoading = (value: boolean) => {
     loading.value = value
@@ -25,9 +27,17 @@ export const useBlogStore = defineStore('blog', () => {
     posts.value = posts.value.filter((el: Blog.Post) => el.id !== id)
   }
 
+  const setSearchValue = (value: string) => {
+    searchValue.value = value
+  }
+
   const isLoading = computed<Ref<Boolean>>(() => loading)
 
-  const postsList = computed<Ref<Blog.Post[]>>(() => posts)
+  const postsListSearched = computed(() =>
+    posts.value.filter((el) => el.body.includes(searchValue.value))
+  )
+  // const postsListSorted = computed<Ref<Blog.Post[]>>(() => postsListSearched)
+  const postsList = computed(() => postsListSearched)
 
   return {
     loading,
@@ -38,6 +48,7 @@ export const useBlogStore = defineStore('blog', () => {
     addPost,
     deletePost,
     postsList,
-    paginate_number
+    paginate_number,
+    setSearchValue
   }
 })

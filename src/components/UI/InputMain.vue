@@ -15,7 +15,7 @@ export default {
 
 <script setup lang="ts">
 defineProps({
-  modelValue: { type: String, required: true },
+  modelValue: { type: String, required: false },
   custom_placeholder: {
     type: String,
     default: 'text'

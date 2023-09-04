@@ -1,7 +1,10 @@
 <template>
   <div class="content">
     <div>
-      <input-main :model-value="searchValue" :custom_placeholder="'Search'"></input-main>
+      <input-main
+        @update:model-value="(val) => (searchValue = val.trim())"
+        :custom_placeholder="'Search'"
+      ></input-main>
       <btn-main @click="null" class="is-primary mt-4 mb-4">Search</btn-main>
     </div>
     <div class="is-flex is-justify-content-center is-align-content-center">
@@ -82,6 +85,10 @@ watch(
     immediate: true
   }
 )
+
+watch(searchValue, () => {
+  store.setSearchValue(searchValue.value)
+})
 
 onMounted(() => {
   if (!posts.value.length) get_posts(store.paginate_number)
