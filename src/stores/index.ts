@@ -5,6 +5,7 @@ import type { ComputedRef } from 'vue'
 
 export const useBlogStore = defineStore('blog', () => {
   const loading = ref<Boolean>(false)
+  const hasNoMorePosts = ref<Boolean>(false)
   const posts = ref<Blog.Post[]>([])
   const searchValue = ref<string>('')
   const paginate_number = ref<number>(0)
@@ -15,6 +16,9 @@ export const useBlogStore = defineStore('blog', () => {
     if (data.length) {
       posts.value = [...posts.value, ...data]
       paginate_number.value += 10
+      setNoPosts(false)
+    } else {
+      setNoPosts(true)
     }
   }
 
@@ -31,7 +35,13 @@ export const useBlogStore = defineStore('blog', () => {
     searchValue.value = value
   }
 
+  const setNoPosts = (value: boolean) => {
+    hasNoMorePosts.value = value
+  }
+
   const isLoading = computed<Ref<Boolean>>(() => loading)
+
+  const noMorePosts = computed<Ref<Boolean>>(() => hasNoMorePosts)
 
   const postsListSearched = computed(() =>
     posts.value.filter((el) => el.body.includes(searchValue.value))
@@ -49,6 +59,8 @@ export const useBlogStore = defineStore('blog', () => {
     deletePost,
     postsList,
     paginate_number,
-    setSearchValue
+    setSearchValue,
+    noMorePosts,
+    setNoPosts
   }
 })

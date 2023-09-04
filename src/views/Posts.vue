@@ -15,7 +15,7 @@
     <Transition name="posts-fade">
       <div v-if="posts.length">
         <posts-list :posts="posts" @deletePost="handleDeletePost"></posts-list>
-        <div ref="bottom"></div>
+        <div ref="bottom">bottom</div>
       </div>
       <div v-else>No posts yet</div>
     </Transition>
@@ -25,6 +25,11 @@
       </modal-window>
     </Transition>
     <spinner-main :showItem="isLoading"></spinner-main>
+    <Transition name="modal-fade">
+      <modal-window :showItem="showModalNoPosts" @toggleModal="closeModalNoPosts"
+        >No more posts!
+      </modal-window>
+    </Transition>
   </div>
 </template>
 
@@ -49,8 +54,14 @@ const store = useBlogStore()
 const posts = store.postsList
 const showModal = ref(false)
 const isLoading = store.isLoading
+const noMorePosts = store.noMorePosts
+const showModalNoPosts = ref(false)
 const searchValue = ref<string>('')
-const firstIntersection = ref<boolean>(true)
+const isIntersected = ref<boolean>(false)
+const isScrollEvent = ref<boolean>(false)
+const scrolledDown = ref<boolean>(false)
+const scrolledValue = ref<number>(0)
+
 const bottom = ref()
 const handleSubmitNewBlog = (post: Blog.Post) => {
   store.addPost(post)
@@ -60,40 +71,46 @@ const handleSubmitNewBlog = (post: Blog.Post) => {
 const handleDeletePost = (id: number) => store.deletePost(id)
 
 const requestForPosts = async () => {
-  if (firstIntersection.value) {
-    firstIntersection.value = false
-    const result = await get_posts(store.paginate_number)
-    firstIntersection.value = true
-  }
+  isIntersected.value = false
+  isScrollEvent.value = false
+  const result = await get_posts(store.paginate_number)
+}
+
+const handleIntersect = () => {
+  if (scrolledValue.value) isIntersected.value = true
 }
 
 const handleScroll = (e: Event) => {
+  isScrollEvent.value = true
+  if (scrolledValue.value < document.body.scrollTop) {
+    scrolledDown.value = true
+  } else {
+    scrolledDown.value = false
+  }
+  if (scrolledDown.value && isIntersected.value === true) requestForPosts()
+  scrolledValue.value = document.body.scrollTop
+}
+
+const closeModalNoPosts = () => {
+  showModalNoPosts.value = false
+  store.setNoPosts(false)
+}
+
+watch(bottom, () => {
   if (bottom.value) {
     const observer = new IntersectionObserver((data: IntersectionObserverEntry[]) => {
-      data[0].isIntersecting ? requestForPosts() : null
+      data[0].isIntersecting ? handleIntersect() : null
     })
     observer.observe(bottom.value)
   }
-}
-
-// watch(bottom, () => {
-//   if (bottom.value) {
-//     const observer = new IntersectionObserver((data: IntersectionObserverEntry[]) => {
-//       console.log(data[0].isIntersecting)
-//       data[0].isIntersecting ? get_posts(store.paginate_number) : null
-//     })
-//     observer.observe(bottom.value)
-//   }
-// })
+})
 
 watch(
   isLoading,
   () => {
     if (isLoading.value) {
       document.body.style.overflow = 'hidden'
-      console.log('is loading')
     } else if (!isLoading.value) {
-      console.log('this case, no hidden')
       document.body.style.overflow = ''
     }
   },
@@ -106,12 +123,18 @@ watch(searchValue, () => {
   store.setSearchValue(searchValue.value)
 })
 
+watch(noMorePosts, () => {
+  if (noMorePosts.value) {
+    showModalNoPosts.value = true
+  }
+})
+
 onMounted(() => {
   if (!posts.value.length) get_posts(store.paginate_number)
 })
 
 onMounted(() => {
-  document.body.addEventListener('scroll', handleScroll)
+  document.body.addEventListener('scroll', (e: Event) => handleScroll(e))
 })
 </script>
 
