@@ -6,7 +6,11 @@
         :custom_placeholder="'Search'"
         :model-value="searchValue"
       ></input-main>
-      <btn-main class="is-primary mt-4 mb-4" @click="searchPost" v-if="!searchedValue"
+      <btn-main
+        class="is-primary mt-4 mb-4"
+        @click="searchPost"
+        v-if="!searchedValue"
+        :disabled="!searchValue"
         >Search</btn-main
       >
       <btn-main class="is-primary mt-4 mb-4" @click="() => (searchValue = '')" v-else
