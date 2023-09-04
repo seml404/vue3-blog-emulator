@@ -50,7 +50,8 @@ const posts = store.postsList
 const showModal = ref(false)
 const isLoading = store.isLoading
 const searchValue = ref<string>('')
-
+const firstIntersection = ref<boolean>(true)
+const bottom = ref()
 const handleSubmitNewBlog = (post: Blog.Post) => {
   store.addPost(post)
   showModal.value = false
@@ -58,17 +59,32 @@ const handleSubmitNewBlog = (post: Blog.Post) => {
 
 const handleDeletePost = (id: number) => store.deletePost(id)
 
-const bottom = ref()
+const requestForPosts = async () => {
+  if (firstIntersection.value) {
+    firstIntersection.value = false
+    const result = await get_posts(store.paginate_number)
+    firstIntersection.value = true
+  }
+}
 
-watch(bottom, () => {
+const handleScroll = (e: Event) => {
   if (bottom.value) {
     const observer = new IntersectionObserver((data: IntersectionObserverEntry[]) => {
-      console.log(data[0].isIntersecting)
-      data[0].isIntersecting ? get_posts(store.paginate_number) : null
+      data[0].isIntersecting ? requestForPosts() : null
     })
     observer.observe(bottom.value)
   }
-})
+}
+
+// watch(bottom, () => {
+//   if (bottom.value) {
+//     const observer = new IntersectionObserver((data: IntersectionObserverEntry[]) => {
+//       console.log(data[0].isIntersecting)
+//       data[0].isIntersecting ? get_posts(store.paginate_number) : null
+//     })
+//     observer.observe(bottom.value)
+//   }
+// })
 
 watch(
   isLoading,
@@ -92,6 +108,10 @@ watch(searchValue, () => {
 
 onMounted(() => {
   if (!posts.value.length) get_posts(store.paginate_number)
+})
+
+onMounted(() => {
+  document.body.addEventListener('scroll', handleScroll)
 })
 </script>
 
