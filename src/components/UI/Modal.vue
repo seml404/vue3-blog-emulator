@@ -1,5 +1,5 @@
 <template>
-  <div class="modal__background" @click="handeToggleModal" v-if="showItem">
+  <div class="modal__background" @click="handeCloseModal" v-if="showItem">
     <div class="modal__content" @click.stop>
       <slot></slot>
     </div>
@@ -14,13 +14,13 @@ const props = defineProps({
     default: false
   }
 })
-const emit = defineEmits(['toggleModal'])
-const handeToggleModal = (e) => {
-  emit('toggleModal')
+const emit = defineEmits(['closeModal'])
+const handeCloseModal = () => {
+  emit('closeModal')
 }
 
 const escToggle = (e: KeyboardEvent) => {
-  if (e.key === 'Escape') emit('toggleModal')
+  if (e.key === 'Escape') emit('closeModal')
 }
 
 onMounted(() => {

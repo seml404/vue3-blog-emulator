@@ -4,8 +4,14 @@
       <input-main
         @update:model-value="(val) => (searchValue = val.trim())"
         :custom_placeholder="'Search'"
+        :model-value="searchValue"
       ></input-main>
-      <btn-main @click="null" class="is-primary mt-4 mb-4">Search</btn-main>
+      <btn-main class="is-primary mt-4 mb-4" @click="searchPost" v-if="!searchedValue"
+        >Search</btn-main
+      >
+      <btn-main class="is-primary mt-4 mb-4" @click="() => (searchValue = '')" v-else
+        >Clear search</btn-main
+      >
     </div>
     <div class="is-flex is-justify-content-center is-align-content-center">
       <p class="is-size-2">List of posts</p>
@@ -20,13 +26,13 @@
       <div v-else>No posts yet</div>
     </Transition>
     <Transition name="modal-fade">
-      <modal-window :showItem="showModal" @toggleModal="showModal = !showModal"
+      <modal-window :showItem="showModal" @closeModal="showModal = false"
         ><create-post @submitNewBlog="handleSubmitNewBlog"></create-post>
       </modal-window>
     </Transition>
     <spinner-main :showItem="isLoading"></spinner-main>
     <Transition name="modal-fade">
-      <modal-window :showItem="showNoPosts" @toggleModal="closeShowNoPosts"
+      <modal-window :showItem="showNoPosts" @closeModal="closeShowNoPosts"
         ><div class="p-5">No more posts!</div>
       </modal-window>
     </Transition>
@@ -57,6 +63,7 @@ const isLoading = store.isLoading
 const noMorePosts = store.noMorePosts
 const showNoPosts = ref(false)
 const searchValue = ref<string>('')
+const searchedValue = store.searchedValue
 const isIntersected = ref<boolean>(false)
 const scrolledDown = ref<boolean>(false)
 const scrolledValue = ref<number>(0)
@@ -92,8 +99,12 @@ const closeShowNoPosts = () => {
   store.setNoPosts(false)
 }
 
+const searchPost = () => {
+  store.setSearchValue(searchValue.value)
+}
+
 watch(bottom, () => {
-  if (bottom.value) {
+  if (bottom.value && !searchValue.value) {
     const observer = new IntersectionObserver((data: IntersectionObserverEntry[]) => {
       data[0].isIntersecting ? handleIntersect() : null
     })
@@ -114,7 +125,7 @@ watch(
 )
 
 watch(searchValue, () => {
-  store.setSearchValue(searchValue.value)
+  if (!searchValue.value) store.setSearchValue('')
 })
 
 watch(noMorePosts, () => {

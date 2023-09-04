@@ -6,7 +6,7 @@ export const get_posts = async (startNum: number) => {
   const store = useBlogStore()
   try {
     store.setLoading(true)
-    const posts = await Axios.get(`${URL}/posts/?_start=${startNum}&_limit=10`)
+    const posts = await Axios.get(`${URL}/posts/?_start=${startNum}&_limit=5`)
     store.setPosts(posts.data)
   } catch (er) {
     console.log(er)

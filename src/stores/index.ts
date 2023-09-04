@@ -15,7 +15,7 @@ export const useBlogStore = defineStore('blog', () => {
   const setPosts = (data: Blog.Post[]) => {
     if (data.length) {
       posts.value = [...posts.value, ...data]
-      paginate_number.value += 10
+      paginate_number.value += 5
       setNoPosts(false)
     } else {
       setNoPosts(true)
@@ -49,6 +49,8 @@ export const useBlogStore = defineStore('blog', () => {
   // const postsListSorted = computed<Ref<Blog.Post[]>>(() => postsListSearched)
   const postsList = computed(() => postsListSearched)
 
+  const searchedValue = computed(() => searchValue)
+
   return {
     loading,
     isLoading,
@@ -61,6 +63,7 @@ export const useBlogStore = defineStore('blog', () => {
     paginate_number,
     setSearchValue,
     noMorePosts,
-    setNoPosts
+    setNoPosts,
+    searchedValue
   }
 })
