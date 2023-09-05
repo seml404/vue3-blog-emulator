@@ -2,6 +2,9 @@ import { computed, ref, type Ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { Blog } from '@/types'
 import type { ComputedRef } from 'vue'
+import { PostsService } from '@/service/'
+
+export const posts_service = new PostsService()
 
 export const useBlogStore = defineStore('blog', () => {
   const loading = ref<Boolean>(false)
@@ -19,6 +22,21 @@ export const useBlogStore = defineStore('blog', () => {
       setNoPosts(false)
     } else {
       setNoPosts(true)
+    }
+  }
+
+  const getPosts = async () => {
+    setLoading(true)
+    try {
+      const { data, status } = await posts_service.get_posts(paginate_number.value)
+      setPosts(data)
+      return status
+    } catch (er) {
+      console.log(er)
+    } finally {
+      setTimeout(() => {
+        setLoading(false)
+      }, 1000)
     }
   }
 
@@ -52,6 +70,7 @@ export const useBlogStore = defineStore('blog', () => {
   const searchedValue = computed(() => searchValue)
 
   return {
+    getPosts,
     loading,
     isLoading,
     posts,

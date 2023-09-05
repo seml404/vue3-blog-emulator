@@ -1,22 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/Home.vue'
+import { Blog } from '@/types'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: Blog.Path.HOME,
       component: HomeView
     },
     {
       path: '/posts',
-      name: 'posts',
+      name: Blog.Path.POSTS,
       component: () => import('../views/Posts.vue')
     },
     {
       path: '/posts/:id',
-      name: 'post_details',
+      name: Blog.Path.POST_DETAILS,
       component: () => import('../views/PostDetails.vue')
     }
   ]

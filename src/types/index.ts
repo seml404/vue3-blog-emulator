@@ -4,4 +4,10 @@ export namespace Blog {
     title: String
     body: String
   }
+
+  export enum Path {
+    HOME = '/',
+    POSTS = 'posts',
+    POST_DETAILS = 'post_details'
+  }
 }

@@ -53,7 +53,6 @@ export default {
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue'
 import type { Blog } from '@/types/index'
-import { get_posts } from '@/service/index'
 import { useBlogStore } from '@/stores'
 import SpinnerMain from '../components/UI/SpinnerMain.vue'
 import InputMain from '../components/UI/InputMain.vue'
@@ -82,7 +81,7 @@ const handleDeletePost = (id: number) => store.deletePost(id)
 
 const requestForPosts = async () => {
   isIntersected.value = false
-  await get_posts(store.paginate_number)
+  store.getPosts()
 }
 
 const handleIntersect = () => {
@@ -142,7 +141,7 @@ watch(noMorePosts, () => {
 })
 
 onMounted(() => {
-  if (!posts.value.length) get_posts(store.paginate_number)
+  if (!posts.value.length) store.getPosts()
 })
 
 onMounted(() => {

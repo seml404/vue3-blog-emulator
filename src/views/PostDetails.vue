@@ -1,7 +1,17 @@
 <template>
   <div class="content">
-    <p class="is-size-1">This is the post with id {{ id }}</p>
-    <p class="is-size-3">{{ postDetails.title }}</p>
+    <div class="post-item card p-3">
+      <div class="line">
+        <p class="is-size-4 mr-3">Title:</p>
+        <p class="is-size-6">{{ postDetails.title }}</p>
+      </div>
+      <div class="line">
+        <p class="is-size-4 mr-3">Text:</p>
+        <p class="is-size-6">{{ postDetails.body }}</p>
+      </div>
+      <btn-main class="mt-4" @click.stop="handleDelete(id)">Delete post</btn-main>
+    </div>
+    <spinner-main :showItem="isLoading"></spinner-main>
   </div>
 </template>
 
@@ -14,25 +24,26 @@ export default {
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
 import { useBlogStore } from '@/stores'
-import { onBeforeMount, ref } from 'vue'
+import { onBeforeMount, onMounted, ref } from 'vue'
 import type { Blog } from '@/types/index'
-import { default_post } from '@/service/'
+import { storeToRefs } from 'pinia'
+import { posts_service } from '@/stores'
 
 const route = useRoute()
 const store = useBlogStore()
-const postDetails = ref<Blog.Post>(default_post())
+const postDetails = ref<Blog.Post>(posts_service.default_post())
 const id = +route.params.id
-const posts = store.posts
+const posts = store.postsList
+const isLoading = store.isLoading
 
-onBeforeMount(async () => {
-  // if (!store.posts.length) {
-  //   await store.get_posts(store.paginate_number)
-  //   console.log('posts received', posts)
-  //   const post = posts.find((el) => el.id === +route.params.id)
-  //   console.log(post, id)
-  // } else {
-  //   const post = posts.filter((el) => el.id === +route.params.id)
-  //   console.log(post, id, store.posts)
-  // }
+const handleDelete = (id: number) => {
+  store.deletePost(id)
+}
+
+onMounted(async () => {
+  if (!store.posts.length) {
+    await store.getPosts()
+  }
+  postDetails.value = posts.value.filter((el: Blog.Post) => el.id === id)[0]
 })
 </script>
