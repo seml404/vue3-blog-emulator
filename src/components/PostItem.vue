@@ -1,5 +1,8 @@
 <template>
-  <div class="post-item card">
+  <div
+    class="post-item card"
+    @click="$router.push({ name: 'post_details', params: { id: post.id } })"
+  >
     <div class="line">
       <p class="is-size-4 mr-3">Title:</p>
       <p class="is-size-6">{{ post.title }}</p>
@@ -8,7 +11,7 @@
       <p class="is-size-4 mr-3">Text:</p>
       <p class="is-size-6">{{ post.body }}</p>
     </div>
-    <btn-main class="mt-4" @click="$emit('deletePost', post.id)">Delete post</btn-main>
+    <btn-main class="mt-4" @click.stop="$emit('deletePost', post.id)">Delete post</btn-main>
   </div>
 </template>
 

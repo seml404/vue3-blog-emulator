@@ -16,3 +16,11 @@ export const get_posts = async (startNum: number) => {
     }, 1000)
   }
 }
+
+export const default_post = () => {
+  return {
+    id: 0,
+    body: '',
+    title: ''
+  }
+}
