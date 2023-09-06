@@ -39,6 +39,7 @@ watch(
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  z-index: 1000;
 }
 
 .spinner-content {

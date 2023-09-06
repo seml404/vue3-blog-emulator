@@ -22,11 +22,10 @@ export default {
 </script>
 
 <script lang="ts" setup>
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useBlogStore } from '@/stores'
-import { onBeforeMount, onMounted, ref } from 'vue'
-import type { Blog } from '@/types/index'
-import { storeToRefs } from 'pinia'
+import { onMounted, ref } from 'vue'
+import { Blog } from '@/types/index'
 import { posts_service } from '@/stores'
 
 const route = useRoute()
@@ -35,9 +34,11 @@ const postDetails = ref<Blog.Post>(posts_service.default_post())
 const id = +route.params.id
 const posts = store.postsList
 const isLoading = store.isLoading
+const router = useRouter()
 
 const handleDelete = (id: number) => {
   store.deletePost(id)
+  router.push({ name: Blog.Path.POSTS })
 }
 
 onMounted(async () => {

@@ -9,13 +9,13 @@
 
       <div class="is-flex is-justify-content-center is-align-content-center p-4">
         <btn-main
-          class="is-primary"
+          class="is-primary mr-5"
           @click="searchPost"
           v-if="!searchedValue"
           :disabled="!searchValue"
           >Search for post</btn-main
         >
-        <btn-main class="is-primary mt-4 mb-4" @click="() => (searchValue = '')" v-else
+        <btn-main class="is-primary mr-5" @click="() => (searchValue = '')" v-else
           >Clear search</btn-main
         >
         <btn-main @click="showModal = true">Create new post</btn-main>
@@ -34,7 +34,10 @@
         <div class="is-flex is-justify-content-center is-align-content-center">
           <p class="is-size-3">No posts yet</p>
         </div>
-        <btn-main class="is-primary mt-4 mb-4" @click="() => requestForPosts()"
+        <btn-main
+          class="is-primary mt-4 mb-4"
+          v-if="!searchedValue"
+          @click="() => requestForPosts()"
           >Request for posts</btn-main
         >
       </div>
