@@ -44,7 +44,7 @@
         ><create-post @submitNewBlog="handleSubmitNewBlog"></create-post>
       </modal-window>
     </Transition>
-    <spinner-main :showItem="isLoading"></spinner-main>
+
     <Transition name="modal-fade">
       <modal-window :showItem="showNoPosts" @closeModal="closeShowNoPosts"
         ><div class="p-5">No more posts!</div>
@@ -55,16 +55,14 @@
 
 <script lang="ts">
 export default {
-  components: { SpinnerMain, InputMain },
   name: 'PostsView'
 }
 </script>
 
 <script setup lang="ts">
-import { ref, onMounted, computed, watch } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import type { Blog } from '@/types/index'
 import { useBlogStore } from '@/stores'
-import SpinnerMain from '../components/UI/SpinnerMain.vue'
 import InputMain from '../components/UI/InputMain.vue'
 
 // mock initial
@@ -72,7 +70,6 @@ import InputMain from '../components/UI/InputMain.vue'
 const store = useBlogStore()
 const posts = store.postsList
 const showModal = ref(false)
-const isLoading = store.isLoading
 const noMorePosts = store.noMorePosts
 const showNoPosts = ref(false)
 const searchValue = ref<string>('')
@@ -124,18 +121,6 @@ watch(bottom, () => {
     observer.observe(bottom.value)
   }
 })
-
-watch(
-  isLoading,
-  () => {
-    isLoading.value
-      ? (document.body.style.overflow = 'hidden')
-      : (document.body.style.overflow = '')
-  },
-  {
-    immediate: true
-  }
-)
 
 watch(searchValue, () => {
   if (!searchValue.value) store.setSearchValue('')

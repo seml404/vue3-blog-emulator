@@ -11,13 +11,20 @@ export default {
 </script>
 
 <script lang="ts" setup>
-const props = defineProps({
-  showItem: {
-    type: Boolean,
-    default: false,
-    required: true
+import { watch } from 'vue'
+import { useBlogStore } from '@/stores'
+const store = useBlogStore()
+const showItem = store.isLoading
+
+watch(
+  showItem,
+  () => {
+    showItem.value ? (document.body.style.overflow = 'hidden') : (document.body.style.overflow = '')
+  },
+  {
+    immediate: true
   }
-})
+)
 </script>
 
 <style lang="scss" scoped>

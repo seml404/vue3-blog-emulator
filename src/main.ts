@@ -10,6 +10,7 @@ import {
   nav_bar,
   spinner_main
 } from '@/components'
+import { app_layout, clean_layout, default_layout } from './layouts'
 import '@/scss/main.scss'
 import 'bulma/css/bulma.css'
 
@@ -17,6 +18,8 @@ import App from './App.vue'
 import router from './router/'
 
 const app = createApp(App)
+
+// #TODO - factory
 
 app
   .use(createPinia())
@@ -28,5 +31,8 @@ app
   .component('create-post', create_post)
   .component('nav-bar', nav_bar)
   .component('spinner-main', spinner_main)
+  .component('app-layout', app_layout)
+  .component('default-layout', default_layout)
+  .component('clean-layout', clean_layout)
   .use(router)
   .mount('#app')
