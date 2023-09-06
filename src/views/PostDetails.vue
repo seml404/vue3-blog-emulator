@@ -9,7 +9,7 @@
         <p class="is-size-4 mr-3">Text:</p>
         <p class="is-size-6">{{ postDetails.body }}</p>
       </div>
-      <btn-main class="mt-4" @click.stop="handleDelete(id)">Delete post</btn-main>
+      <btn-main class="mt-4 is-danger" @click.stop="handleDelete(id)">Delete post</btn-main>
     </div>
     <spinner-main :showItem="isLoading"></spinner-main>
   </div>

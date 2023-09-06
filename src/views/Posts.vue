@@ -18,7 +18,7 @@
         <btn-main class="is-primary mr-5" @click="() => (searchValue = '')" v-else
           >Clear search</btn-main
         >
-        <btn-main @click="showModal = true">Create new post</btn-main>
+        <btn-main @click="showModal = true" class="is-primary">Create new post</btn-main>
       </div>
     </div>
     <div class="is-flex is-justify-content-center is-align-content-center">

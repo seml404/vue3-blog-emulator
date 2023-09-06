@@ -11,7 +11,9 @@
       <p class="is-size-4 mr-3">Text:</p>
       <p class="is-size-6">{{ post.body }}</p>
     </div>
-    <btn-main class="mt-4" @click.stop="$emit('deletePost', post.id)">Delete post</btn-main>
+    <btn-main class="mt-4 is-danger" @click.stop="$emit('deletePost', post.id)"
+      >Delete post</btn-main
+    >
   </div>
 </template>
 

@@ -16,13 +16,15 @@
         class="input-new-blog"
       ></input-main>
     </div>
-    <btn-main @click="handleSubmit" class="mt-4 mb-4">Create new post</btn-main>
+    <btn-main @click="handleSubmit" class="mt-4 mb-4 is-primary" :disabled="!enableBtn"
+      >Create new post</btn-main
+    >
   </form>
 </template>
 
 <script setup lang="ts">
 import type { Blog } from '@/types'
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
 const emit = defineEmits(['submitNewBlog'])
 const newBlog = reactive<Blog.Post>({
   id: Date.now(),
@@ -34,6 +36,10 @@ const handleSubmit = () => {
     emit('submitNewBlog', newBlog)
   }
 }
+
+const enableBtn = computed(() => {
+  return newBlog.title && newBlog.body
+})
 </script>
 
 <script lang="ts">
