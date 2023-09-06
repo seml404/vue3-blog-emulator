@@ -5,7 +5,7 @@
         <p class="is-size-4 mr-3">Title:</p>
         <p class="is-size-6">{{ postDetails.title }}</p>
       </div>
-      <div class="line">
+      <div class="line mt-5">
         <p class="is-size-4 mr-3">Text:</p>
         <p class="is-size-6">{{ postDetails.body }}</p>
       </div>

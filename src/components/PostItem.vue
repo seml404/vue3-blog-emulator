@@ -37,6 +37,7 @@ const props = defineProps({
   border: 1px solid #2f5cc5;
   padding: 10px;
   border-radius: 10px;
+  cursor: pointer;
   .line {
     display: flex;
   }
