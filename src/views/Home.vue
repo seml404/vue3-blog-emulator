@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <section class="hero is-info mb-5">
+    <section class="hero is-info mb-5 rounded">
       <div class="hero-body">
         <p class="title">Blog emulator</p>
         <p class="subtitle">
@@ -53,3 +53,9 @@ export default {
   name: 'HomeView'
 }
 </script>
+
+<style scoped lang="scss">
+.hero {
+  border-radius: $default-radius;
+}
+</style>
