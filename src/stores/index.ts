@@ -12,6 +12,7 @@ export const useBlogStore = defineStore('blog', () => {
   const posts = ref<Blog.Post[]>([])
   const searchValue = ref<string>('')
   const paginate_number = ref<number>(0)
+  const _isIntersected = ref<boolean>(false)
   const setLoading = (value: boolean) => {
     loading.value = value
   }
@@ -69,6 +70,11 @@ export const useBlogStore = defineStore('blog', () => {
 
   const searchedValue = computed(() => searchValue)
 
+  const isIntersected = computed(() => _isIntersected)
+  const setIsIntersected = (value: boolean) => {
+    _isIntersected.value = value
+  }
+
   return {
     getPosts,
     loading,
@@ -83,6 +89,8 @@ export const useBlogStore = defineStore('blog', () => {
     setSearchValue,
     noMorePosts,
     setNoPosts,
-    searchedValue
+    searchedValue,
+    isIntersected,
+    setIsIntersected
   }
 })
