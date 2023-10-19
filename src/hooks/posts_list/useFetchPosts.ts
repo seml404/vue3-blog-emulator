@@ -1,20 +1,18 @@
-import { onMounted, ref } from 'vue'
+import { onMounted } from 'vue'
 import { useBlogStore } from '@/stores'
 
 const store = useBlogStore()
 
-export const fetchPosts = async () => {
-  const { setIsIntersected } = store
-  const posts = ref(store.postsList)
-  const isIntersected = ref(store.isIntersected)
+const { posts, setIsIntersected, getPosts } = store
 
+export const useFetchPosts = async () => {
   onMounted(() => {
-    if (!posts.value.length) store.getPosts()
+    if (!posts.value.length) getPosts()
   })
 
   const requestForPosts = async () => {
     setIsIntersected(false)
-    store.getPosts()
+    getPosts()
   }
-  return { posts, requestForPosts }
+  return { requestForPosts }
 }

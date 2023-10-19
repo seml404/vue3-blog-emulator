@@ -1,35 +1,34 @@
 import { computed, ref, type Ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { Blog } from '@/types'
-import type { ComputedRef } from 'vue'
 import { PostsService } from '@/service/'
 
 export const posts_service = new PostsService()
 
 export const useBlogStore = defineStore('blog', () => {
-  const loading = ref<Boolean>(false)
-  const hasNoMorePosts = ref<Boolean>(false)
-  const posts = ref<Blog.Post[]>([])
-  const searchValue = ref<string>('')
-  const paginate_number = ref<number>(0)
+  const _loading = ref<Boolean>(false)
+  const _noMorePosts = ref<Boolean>(false)
+  const _posts = ref<Blog.Post[]>([])
+  const _paginateNumber = ref<number>(0)
   const _isIntersected = ref<boolean>(false)
+  const _searchValue = ref<string>('')
+
   const setLoading = (value: boolean) => {
-    loading.value = value
+    _loading.value = value
   }
   const setPosts = (data: Blog.Post[]) => {
     if (data.length) {
-      posts.value = [...posts.value, ...data]
-      paginate_number.value += 5
+      _posts.value = [..._posts.value, ...data]
+      _paginateNumber.value += 5
       setNoPosts(false)
     } else {
       setNoPosts(true)
     }
   }
-
   const getPosts = async () => {
     setLoading(true)
     try {
-      const { data, status } = await posts_service.get_posts(paginate_number.value)
+      const { data, status } = await posts_service.get_posts(_paginateNumber.value)
       setPosts(data)
       return status
     } catch (er) {
@@ -40,57 +39,48 @@ export const useBlogStore = defineStore('blog', () => {
       }, 1000)
     }
   }
-
   const addPost = (post: Blog.Post) => {
-    posts.value.unshift(post)
-    paginate_number.value += 10
+    _posts.value.unshift(post)
+    _paginateNumber.value += 10
   }
-
   const deletePost = (id: number) => {
-    posts.value = posts.value.filter((el: Blog.Post) => el.id !== id)
+    _posts.value = _posts.value.filter((el: Blog.Post) => el.id !== id)
   }
-
-  const setSearchValue = (value: string) => {
-    searchValue.value = value
-  }
-
   const setNoPosts = (value: boolean) => {
-    hasNoMorePosts.value = value
+    _noMorePosts.value = value
   }
-
-  const isLoading = computed<Ref<Boolean>>(() => loading)
-
-  const noMorePosts = computed<Ref<Boolean>>(() => hasNoMorePosts)
-
-  const postsListSearched = computed(() =>
-    posts.value.filter((el) => el.body.includes(searchValue.value))
-  )
-  // const postsListSorted = computed<Ref<Blog.Post[]>>(() => postsListSearched)
-  const postsList = computed(() => postsListSearched)
-
-  const searchedValue = computed(() => searchValue)
-
-  const isIntersected = computed(() => _isIntersected)
+  const setSearchValue = (value: string) => {
+    _searchValue.value = value
+  }
   const setIsIntersected = (value: boolean) => {
     _isIntersected.value = value
   }
 
+  const isLoading = computed<Ref<Boolean>>(() => _loading)
+  const noMorePosts = computed<Ref<Boolean>>(() => _noMorePosts)
+  const postsListSearched = computed(() =>
+    _posts.value.filter((el) => el.body.includes(_searchValue.value))
+  )
+  const isIntersected = computed(() => _isIntersected)
+  // const postsListSorted = computed<Ref<Blog.Post[]>>(() => postsListSearched)
+  const postsList = computed(() => postsListSearched)
+  const searchValue = computed(() => _searchValue)
+  const posts = computed(() => _posts)
+
   return {
-    getPosts,
-    loading,
     isLoading,
+    searchValue,
+    isIntersected,
+    noMorePosts,
+    postsList,
     posts,
     setLoading,
     setPosts,
     addPost,
     deletePost,
-    postsList,
-    paginate_number,
+    getPosts,
     setSearchValue,
-    noMorePosts,
     setNoPosts,
-    searchedValue,
-    isIntersected,
     setIsIntersected
   }
 })
