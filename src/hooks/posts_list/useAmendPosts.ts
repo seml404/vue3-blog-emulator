@@ -30,5 +30,5 @@ export const useAmendPosts = () => {
     }
   })
 
-  return { handleSubmitNewBlog, handleDeletePost, closeShowNoPosts }
+  return { handleSubmitNewBlog, handleDeletePost, closeShowNoPosts, showModal }
 }

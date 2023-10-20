@@ -46,7 +46,7 @@
     </Transition>
 
     <Transition name="modal-fade">
-      <modal-window :showItem="showNoPosts" @closeModal="closeShowNoPosts"
+      <modal-window :showItem="noMorePosts" @closeModal="closeShowNoPosts"
         ><div class="p-5">No more posts!</div>
       </modal-window>
     </Transition>
@@ -60,21 +60,17 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
-import type { Blog } from '@/types/index'
+import { ref } from 'vue'
 import { useBlogStore } from '@/stores'
 import InputMain from '../components/UI/InputMain.vue'
 import { useSearch, useFetchPosts, useHandleScroll, useAmendPosts } from '@/hooks'
 const bottom = ref()
-const { searchPost, search } = useSearch()
 const { requestForPosts } = useFetchPosts()
-const { scrolledDown, scrolledValue, handleScroll, handleIntersect } = useHandleScroll(
-  requestForPosts,
-  bottom
-)
-const { handleSubmitNewBlog, handleDeletePost, closeShowNoPosts } = useAmendPosts()
+const { searchPost, search } = useSearch(requestForPosts)
+useHandleScroll(requestForPosts, bottom)
+const { handleSubmitNewBlog, handleDeletePost, closeShowNoPosts, showModal } = useAmendPosts()
 const store = useBlogStore()
-const { searchValue, addPost, deletePost } = store
+const { searchValue, postsList: posts, noMorePosts } = store
 </script>
 
 <style scoped>

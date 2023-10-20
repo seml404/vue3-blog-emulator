@@ -5,7 +5,7 @@ const { searchValue, setSearchValue } = store
 
 export const useSearch = (requestForPosts: () => {}) => {
   const search = ref<string>('')
-  watch(searchValue, () => {
+  watch(search, () => {
     if (!search.value) setSearchValue('')
   })
   const searchPost = () => {

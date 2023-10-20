@@ -50,6 +50,7 @@ export const useBlogStore = defineStore('blog', () => {
     _noMorePosts.value = value
   }
   const setSearchValue = (value: string) => {
+    console.log('set search')
     _searchValue.value = value
   }
   const setIsIntersected = (value: boolean) => {
@@ -59,7 +60,7 @@ export const useBlogStore = defineStore('blog', () => {
   const isLoading = computed<Ref<Boolean>>(() => _loading)
   const noMorePosts = computed<Ref<Boolean>>(() => _noMorePosts)
   const postsListSearched = computed(() =>
-    _posts.value.filter((el) => el.body.includes(_searchValue.value))
+    _posts.value.filter((el) => el.body.includes(_searchValue.value.trim()))
   )
   const isIntersected = computed(() => _isIntersected)
   // const postsListSorted = computed<Ref<Blog.Post[]>>(() => postsListSearched)

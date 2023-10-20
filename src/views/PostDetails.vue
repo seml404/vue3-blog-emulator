@@ -42,7 +42,7 @@ const handleDelete = (id: number) => {
 }
 
 onMounted(async () => {
-  if (!store.posts.length) {
+  if (!store.posts.value.length) {
     await store.getPosts()
   }
   postDetails.value = posts.value.filter((el: Blog.Post) => el.id === id)[0]

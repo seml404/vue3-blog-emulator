@@ -7,7 +7,6 @@ const { setIsIntersected, isIntersected, searchValue } = store
 export const useHandleScroll = (requestForPosts: () => {}, bottom: Ref) => {
   const scrolledDown = ref<boolean>(false)
   const scrolledValue = ref<number>(0)
-  const isIntersected = ref<boolean>(false)
 
   const handleIntersect = () => {
     if (scrolledValue.value) setIsIntersected(true)

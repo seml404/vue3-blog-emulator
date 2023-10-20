@@ -10,10 +10,15 @@ const router = createRouter({
       name: Blog.Path.HOME,
       component: HomeView
     },
+    // {
+    //   path: '/posts',
+    //   name: Blog.Path.POSTS,
+    //   component: () => import('../views/Posts_legacy.vue')
+    // },
     {
       path: '/posts',
       name: Blog.Path.POSTS,
-      component: () => import('../views/Posts.vue')
+      component: () => import('../views/PostsComposition.vue')
     },
     {
       path: '/posts/:id',

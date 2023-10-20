@@ -5,7 +5,7 @@ const store = useBlogStore()
 
 const { posts, setIsIntersected, getPosts } = store
 
-export const useFetchPosts = async () => {
+export const useFetchPosts = () => {
   onMounted(() => {
     if (!posts.value.length) getPosts()
   })
